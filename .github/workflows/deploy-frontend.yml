@@ -189,6 +189,9 @@ jobs:
     environment: production
     needs: [code-quality, security-scan]
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
     - name: Notify Slack - Deployment Started
@@ -209,8 +212,7 @@ jobs:
                 {"title": "Commit", "value": "${{ github.sha }}", "short": true},
                 {"title": "Author", "value": "${{ github.actor }}", "short": true}
               ],
-              "footer": "GitHub Actions",
-              "ts": ${{ github.event.head_commit.timestamp }}
+              "footer": "GitHub Actions"
             }]
           }
       env:
@@ -265,8 +267,7 @@ jobs:
                 {"title": "Environment", "value": "Production", "short": true},
                 {"title": "URL", "value": "https://deployzen.live", "short": true}
               ],
-              "footer": "GitHub Actions",
-              "ts": ${{ github.event.head_commit.timestamp }}
+              "footer": "GitHub Actions"
             }]
           }
       env:
@@ -291,8 +292,7 @@ jobs:
                 {"title": "Workflow", "value": "${{ github.workflow }}", "short": true},
                 {"title": "Run URL", "value": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}", "short": false}
               ],
-              "footer": "GitHub Actions",
-              "ts": ${{ github.event.head_commit.timestamp }}
+              "footer": "GitHub Actions"
             }]
           }
       env:
