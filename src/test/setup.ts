@@ -1,17 +1,17 @@
-import '@testing-library/jest-dom'
-import { expect, afterEach, vi } from 'vitest'
-import { cleanup } from '@testing-library/react'
+import "@testing-library/jest-dom";
+import { expect, afterEach, vi } from "vitest";
+import { cleanup } from "@testing-library/react";
 
 // Cleanup after each test case
 afterEach(() => {
-  cleanup()
-})
+  cleanup();
+});
 
 // Add custom matchers
-expect.extend({})
+expect.extend({});
 
 // Mock environment variables
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: vi.fn().mockImplementation((query: string) => ({
     matches: false,
@@ -23,4 +23,4 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })),
-})
+});

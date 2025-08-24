@@ -1,6 +1,6 @@
-import { Button } from 'antd'
-import './App.css'
-import { Link } from 'react-router-dom';
+import { Button } from "antd";
+import "./App.css";
+import { Link } from "react-router-dom";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,11 +10,11 @@ import {
   Tooltip,
   Legend,
   ChartData,
-  ArcElement
-} from 'chart.js';
-import { Bar, Pie } from 'react-chartjs-2';
-import { useEffect, useState } from 'react';
-import { Book } from './models/Books';
+  ArcElement,
+} from "chart.js";
+import { Bar, Pie } from "react-chartjs-2";
+import { useEffect, useState } from "react";
+import { Book } from "./models/Books";
 // import { Author } from './models/Author';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -26,18 +26,18 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 const barChartOptions = {
   responsive: true,
   plugins: {
     legend: {
-      position: 'top' as const,
+      position: "top" as const,
     },
     title: {
       display: true,
-      text: 'Book Length Distribution'
+      text: "Book Length Distribution",
     },
   },
   scales: {
@@ -45,28 +45,29 @@ const barChartOptions = {
       min: 150,
       max: 700,
       ticks: {
-        stepSize: 10
-      }
-    }
-  }
+        stepSize: 10,
+      },
+    },
+  },
 };
 
 function App() {
   const [books, setBooks] = useState<Book[]>([]);
   // const [authors, setAuthors] = useState<Author[]>([]);
-  const [booksBarChartData, setBooksBarChartData] = useState<ChartData<"bar">>();
+  const [booksBarChartData, setBooksBarChartData] =
+    useState<ChartData<"bar">>();
   // const [authorsBarChartData, setAuthorsBarChartData] = useState<ChartData<"bar">>();
   const [pieChartData, setPieChartData] = useState<ChartData<"pie">>();
 
   useEffect(() => {
     fetchBooks();
     // fetchAuthors();
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (books) {
-      const labels = books.map(book => book.title);
-      const data = books.map(book => book.pages);
+      const labels = books.map((book) => book.title);
+      const data = books.map((book) => book.pages);
 
       setBooksBarChartData({
         labels,
@@ -77,9 +78,9 @@ function App() {
             backgroundColor: generateColors(data.length), // Adjust for desired number of colors
             borderColor: generateColors(data.length), // Adjust for desired number of colors
             borderWidth: 1,
-          }
-        ]
-      })
+          },
+        ],
+      });
     }
   }, [books]);
 
@@ -124,7 +125,7 @@ function App() {
         labels: Array.from(authorBookCount.keys()),
         datasets: [
           {
-            label: 'Book Count',
+            label: "Book Count",
             data: Array.from(authorBookCount.values()),
             backgroundColor: generateColors(authorBookCount.size), // Adjust for desired number of colors
             borderColor: generateColors(authorBookCount.size), // Adjust for desired number of colors
@@ -135,11 +136,17 @@ function App() {
 
       setPieChartData(chartData);
     }
-  }, [books])
+  }, [books]);
 
   function generateColors(numColors: number) {
     const colors = [];
-    const colorPalette = ['#ff6384', '#38aecc', '#ffd700', '#4caf50', '#9c27b0'];
+    const colorPalette = [
+      "#ff6384",
+      "#38aecc",
+      "#ffd700",
+      "#4caf50",
+      "#9c27b0",
+    ];
     for (let i = 0; i < numColors; i++) {
       colors.push(colorPalette[i % colorPalette.length]);
     }
@@ -177,27 +184,36 @@ function App() {
   // };
 
   return (
-    <div className='h-screen font-mono p-4 bg-cyan-400'>
-      <header className='py-2 border-b'>
-        <h1 className='text-center font-bold text-5xl'>Dashboard</h1>
+    <div className="h-screen font-mono p-4 bg-cyan-400">
+      <header className="py-2 border-b">
+        <h1 className="text-center font-bold text-5xl">Dashboard</h1>
       </header>
-      <main className='py-4 px-4 space-y-6'>
-        <div className='space-x-4'>
-          <Button type='primary' size='large' className='rounded-none'>
+      <main className="py-4 px-4 space-y-6">
+        <div className="space-x-4">
+          <Button type="primary" size="large" className="rounded-none">
             <Link to={`books`}>Books</Link>
           </Button>
-          <Button type='primary' size='large' className='rounded-none'>
+          <Button type="primary" size="large" className="rounded-none">
             <Link to={`authors`}>Authors</Link>
           </Button>
         </div>
-        <div className='p-12 flex justify-between' style={{ height: "100%"}}>
+        <div className="p-12 flex justify-between" style={{ height: "100%" }}>
+          <div>{pieChartData && <Pie width={500} data={pieChartData} />}</div>
           <div>
-            {pieChartData && <Pie width={500} data={pieChartData} />}
-          </div>
-          <div>
-            {booksBarChartData && (<Bar style={{
-              display: "block", boxSizing: "border-box", height: "500px", width: "900px"
-            }} width={1800} height={900} options={barChartOptions} data={booksBarChartData} />)}
+            {booksBarChartData && (
+              <Bar
+                style={{
+                  display: "block",
+                  boxSizing: "border-box",
+                  height: "500px",
+                  width: "900px",
+                }}
+                width={1800}
+                height={900}
+                options={barChartOptions}
+                data={booksBarChartData}
+              />
+            )}
           </div>
           {/* <div>
             {authorsBarChartData && (<Bar width={700} options={barChartOptions} data={authorsBarChartData} />)}
@@ -205,7 +221,7 @@ function App() {
         </div>
       </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

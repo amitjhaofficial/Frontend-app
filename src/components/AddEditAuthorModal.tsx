@@ -5,50 +5,54 @@ import { AuthorCreateEditForm } from "./AuthorCreateEditForm";
 import { Author } from "../models/Author";
 
 type Props = {
-   isModalOpen: boolean;
-   isEdit: boolean;
-   initialValues?: Author;
-   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-   onOk: (values: Author) => void;
-}
+  isModalOpen: boolean;
+  isEdit: boolean;
+  initialValues?: Author;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onOk: (values: Author) => void;
+};
 
 export const AddEditAuthorModal = ({
-   isModalOpen, isEdit, initialValues, setIsModalOpen, onOk
+  isModalOpen,
+  isEdit,
+  initialValues,
+  setIsModalOpen,
+  onOk,
 }: Props) => {
-   const [formInstance, setFormInstance] = useState<FormInstance>();
+  const [formInstance, setFormInstance] = useState<FormInstance>();
 
-   const handleOk = async () => {
-      try {
-         const values = await formInstance?.validateFields();
-         formInstance?.resetFields();
-         onOk(values);
-         setIsModalOpen(false);
-      } catch (error) {
-         console.log('Failed:', error);
-      }
-   }
-
-   const handleCancel = () => {
+  const handleOk = async () => {
+    try {
+      const values = await formInstance?.validateFields();
+      formInstance?.resetFields();
+      onOk(values);
       setIsModalOpen(false);
-   }
+    } catch (error) {
+      console.log("Failed:", error);
+    }
+  };
 
-   return (
-      <Modal
-         title={isEdit ? 'Edit Author' : 'Add Author'}
-         open={isModalOpen}
-         okText="Add"
-         onOk={handleOk}
-         okButtonProps={{ autoFocus: true }}
-         onCancel={handleCancel}
-         width={750}
-         destroyOnClose
-      >
-         <AuthorCreateEditForm
-            initialValues={initialValues}
-            onFormInstanceReady={(instance: FormInstance) => {
-               setFormInstance(instance);
-            }}
-         />
-      </Modal>
-   )
-}
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  return (
+    <Modal
+      title={isEdit ? "Edit Author" : "Add Author"}
+      open={isModalOpen}
+      okText="Add"
+      onOk={handleOk}
+      okButtonProps={{ autoFocus: true }}
+      onCancel={handleCancel}
+      width={750}
+      destroyOnClose
+    >
+      <AuthorCreateEditForm
+        initialValues={initialValues}
+        onFormInstanceReady={(instance: FormInstance) => {
+          setFormInstance(instance);
+        }}
+      />
+    </Modal>
+  );
+};
