@@ -14,7 +14,7 @@ export const AuthorCreateEditForm = ({ initialValues, onFormInstanceReady }: Pro
 
    useEffect(() => {
       onFormInstanceReady(form);
-   }, []);
+   }, [form, onFormInstanceReady]);
 
    return (
       <Form form={form} layout="vertical" name="add_edit_author_form" initialValues={initialValues}>

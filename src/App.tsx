@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from 'antd'
 import './App.css'
 import { Link } from 'react-router-dom';

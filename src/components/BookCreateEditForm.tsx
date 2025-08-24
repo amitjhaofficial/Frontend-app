@@ -16,7 +16,7 @@ export const BookCreateEditForm = ({ initialValues, authors, onFormInstanceReady
 
    useEffect(() => {
       onFormInstanceReady(form);
-   }, []);
+   }, [form, onFormInstanceReady]);
 
    const renderOptions = () => {
       return authors.map(author => ({ value: author.id, label: author.name }))
