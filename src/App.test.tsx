@@ -32,7 +32,8 @@ Object.defineProperty(import.meta, 'env', {
 
 // Mock fetch for API calls
 const mockFetch = vi.fn()
-global.fetch = mockFetch
+// @ts-ignore - Mocking global fetch for tests
+;(globalThis as any).fetch = mockFetch
 
 describe('App Component', () => {
   beforeEach(() => {
