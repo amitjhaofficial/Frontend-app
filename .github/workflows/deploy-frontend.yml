@@ -231,6 +231,8 @@ jobs:
       run: npm ci
 
     - name: Build application
+      env:
+        VITE_API_URL: https://api.deployzen.live/api
       run: npm run build
 
     - name: Configure AWS credentials
